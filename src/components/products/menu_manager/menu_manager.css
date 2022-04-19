@@ -1,0 +1,196 @@
+.menu_manager{
+    padding-block: 50px;
+}
+.menu_manager .heading{
+    font-size: 24px;
+}
+.menu_manager .top_row .box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary);
+    border: 2px solid var(--lineColour);
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+.menu_manager .top_row .box:hover{
+    filter: brightness(1.2);
+}
+.menu_manager .top_row .box svg{
+    font-size: 22px;
+    margin-right: 20px;
+}
+
+.food_card{
+    border-radius: 5px;
+    max-width: 300px;
+    overflow: hidden;
+    background-color: var(--secondary);
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    color: black;
+    position: relative;
+}
+.food_card:hover{
+    filter: brightness(1.2);
+}
+.food_card .img_cont{
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+.food_card .img_cont .img{
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: 0.5s ease-in-out;
+}
+.food_card:hover .img_cont .img{
+    transform: scale(1.05);
+}
+.food_card .food_name{
+    font-size: 20px;
+    padding: 8px 20px;
+    padding-bottom: 0px;
+}
+.food_card .food_categories{
+    padding-right: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.food_card .food_categories .food_reviews{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+.food_card .food_categories .food_reviews svg{
+    font-size: 16px;
+}
+.food_card .food_categories .food_reviews span{
+    margin-left: 5px;
+}
+.food_card .food_categories .type{
+    height: 20px;
+    width: 20px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+}
+.food_card .food_categories .type .circ{
+    height: 10px;
+    width: 10px;
+    border-radius: 100%;
+}
+.food_card .food_categories .type.veg{
+    border: 1px solid green;
+}
+.food_card .food_categories .type.veg .circ{
+    background-color: green;
+}
+.food_card .food_categories .type.nonveg {
+    border: 1px solid rgb(228, 30, 30);
+}
+.food_card .food_categories .type.nonveg .circ{
+    background-color: rgb(228, 30, 30);
+}
+.food_card .food_reviews{
+    padding: 5px 20px;
+    font-size: 14px;
+}
+.food_card .food_reviews svg{
+    font-size: 13px;
+    color: rgb(252,188,5);
+    margin-right: 5px;
+    transform: translateY(-2px);
+}
+.food_card .price_cont{
+    padding: 5px 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.food_card .price_cont .discount_cont{
+    display: flex;
+    align-items: center;
+}
+.food_card .price_cont .discount_price{
+    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 10px;
+    text-decoration: line-through;
+    color: white;
+}
+.food_card .price_cont .discount{
+    font-size: 12px;
+    color: white;
+    background-color: var(--btnColour);
+    padding: 3px 10px;
+}
+
+@media only screen and (max-width:550px){
+    .food_card .img_cont{
+        height: 150px;
+    }
+    .food_card .food_categories .food_reviews{
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        font-size: 14px;
+    }
+    .food_card .food_categories .food_reviews svg{
+        font-size: 15px;
+    }
+    .food_card .food_categories .food_reviews span{
+        margin-left: 0;
+        font-size: 13px;
+    }
+}
+@media only screen and (max-width:450px){
+
+    .food_main_card .like{
+        top: 5px;
+        right: 5px;
+        height: 25px;
+        width: 25px;
+        font-size: 14px;
+    }
+    .food_main_card .like:hover{
+        transform: scale(1.1);
+    }
+    .food_main_card .like.active{
+        transform: scale(1.1);
+    }
+    .food_card .food_name{
+        font-size: 18px;
+        padding: 8px 10px;
+        padding-bottom: 0px;
+    }
+    .food_card .img_cont{
+        height: 120px;
+    }
+    .food_card .food_categories{
+        padding-right: 10px;
+        font-size: 14px;
+    }
+    .food_card .price_cont{
+        font-size: 16px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .food_card .price_cont .discount_price{
+        font-size: 14px;
+    }
+    .food_card .price_cont .discount{
+        font-size: 10px;
+        padding: 2px 7px;
+    }
+}

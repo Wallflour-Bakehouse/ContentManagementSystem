@@ -1,0 +1,27 @@
+.user_cont{
+    margin-block: 50px;
+}
+.user_cont .heading{
+    font-size: 24px;
+}
+.user_cont .user_box{
+    padding: 30px 10px;
+    border: 2px solid var(--lineColour);
+    border-radius: 5px;
+    margin-block: 10px;
+}
+.user_cont .user_box .img_cont{
+    margin-bottom: 20px;
+    display: grid;
+    justify-content: center;
+}
+.user_cont .user_box .img_cont img{
+    height: 100px;
+    width: 100px;
+    background-color: var(--secondary);
+    border-radius: 100%;
+}
+.user_cont .user_box .opt{
+    text-align: center;
+    margin-bottom: 5px;
+}

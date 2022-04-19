@@ -1,0 +1,60 @@
+.message_cont{
+    padding-block: 50px;
+}
+.message_cont .msg_sec{
+    border-bottom: 2px solid var(--lineColour);
+    margin-bottom: 20px;
+}
+.message_cont .msg_sec .heading{
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+.message_cont .msg_sec .msg{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    background-color: var(--secondary);
+    border: 2px solid var(--lineColour);
+    margin-bottom: 20px;
+    font-size: 18px;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+.message_cont .msg_sec.read_msgs .heading{
+    margin-top: 60px;
+}
+.message_cont .msg_sec.read_msgs .msg{
+    background-color: var(--secondary);
+    position: relative;
+}
+.message_cont .msg_sec.read_msgs .msg .delete{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(40px, -50%);
+    color: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    background-color: rgb(143, 5, 0);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.message_cont .no_new_msgs{
+    height: 150px;
+    border-radius: 5px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+    border: 2px dashed var(--lineColour);
+}

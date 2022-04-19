@@ -1,0 +1,76 @@
+.recent_comments{
+    padding-block: 50px;
+}
+.recent_comments > .heading{
+    font-size: 24px;
+}
+.recent_comments .comment .date{
+    font-size: 20px;
+    margin-top: 20px;
+}
+.recent_comments .comment_cont{
+    margin: 20px;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary);
+    border-radius: 10px;
+    width: fit-content;
+    border: 2px solid var(--lineColour);
+    position: relative;
+}
+.recent_comments .comment_cont img{
+    height: 60px;
+    width: 60px;
+    max-height: 60px;
+    min-width: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+}
+.recent_comments .comment_cont .top_line{
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+.recent_comments .comment_cont .top_line .name{
+    font-size: 20px;
+    margin-right: 20px;
+}
+.recent_comments .comment_cont .top_line .date_,
+.recent_comments .comment_cont .top_line .rating{
+    font-size: 16px;
+    margin-right: 20px;
+}
+.recent_comments .comment_cont .bottom_line{
+    display: flex;
+}
+.recent_comments .comment_cont .bottom_line .cmt{
+    font-size: 16px;
+    text-align: justify;
+    margin-right: 30px;
+}
+.recent_comments .comment_cont .top_line .delete,
+.recent_comments .comment_cont .top_line .edit{
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: var(--error);
+    height: 35px;
+    width: 35px;
+    border-radius: 100%;
+    transition: 0.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+}
+.recent_comments .comment_cont .bottom_line .edit{
+    right: 47px;
+}
+.recent_comments .comment_cont .bottom_line .delete:hover,
+.recent_comments .comment_cont .bottom_line .edit:hover{
+    transform: scale(1.05);
+}

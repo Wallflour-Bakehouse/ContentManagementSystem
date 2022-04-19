@@ -1,0 +1,79 @@
+.product_form{
+    margin-block: 50px;
+}
+.product_form > .heading{
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.product_form .delete{
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    border: 2px solid var(--lineColour);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    background-color: var(--error);
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+.product_form .delete:hover{
+    filter: brightness(1.3);
+    border: 2px solid white;
+}
+.product_form label{
+    font-size: 18px;
+}
+.product_form input,
+.product_form input:focus,
+.product_form textarea,
+.product_form textarea:focus{
+    color: white;
+    background-color: var(--secondary);
+}
+.product_form .cat_selection .box{
+    padding: 5px 10px;
+    border: 2px solid var(--lineColour);
+    border-radius: 5px;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    margin-block: 5px;
+}
+.product_form .cat_selection .box.active{
+    background-color: var(--secondary);
+    border: 2px solid white;
+    filter: brightness(1.3);
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.product_form .cat_selection .box:hover{
+    background-color: var(--secondary);
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.product_form .dish_type .veg,
+.product_form .dish_type .nonveg{
+    background-color: transparent;
+    border: 2px solid var(--lineColour);
+}
+.product_form .dish_type .veg.active{
+    background-color: green;
+    border: 2px solid green;
+}
+.product_form .dish_type .nonveg.active{
+    background-color: darkred;
+    border: 2px solid darkred;
+}
+.product_form .preview_img{
+    border: 2px solid var(--lineColour);
+    padding-block: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}

@@ -1,0 +1,119 @@
+.home_dashboard{
+    padding-block: 50px;
+}
+.home_dashboard .header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.home_dashboard .header .box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 19%;
+    padding: 10px 20px;
+    background-color: var(--secondary);
+    border: 2px solid var(--lineColour);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+.home_dashboard .header .box:hover{
+    filter: brightness(1.2);
+}
+.home_dashboard .header .box.order_activate{
+    background-color: green;
+}
+.home_dashboard .header .box.order_deactivate{
+    background-color: rgb(143, 0, 0);
+}
+.home_dashboard .header .box .content .text{
+    font-size: 24px;
+}
+.home_dashboard .header .box .content .subtext{
+    font-size: 16px;
+}
+.home_dashboard .header .box svg{
+    margin-left: 30px;
+    font-size: 32px;
+}
+.home_dashboard .active_orders{
+    background-color: var(--secondary);
+    padding: 10px 20px;
+    margin-inline: 10px;
+    border-radius: 5px;
+}
+.home_dashboard .active_orders .heading_sec{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--lineColour);
+}
+.home_dashboard .active_orders .ord_list{
+    text-align: center;
+}
+.home_dashboard .active_orders .ord_list .heading{
+    padding-block: 7px;
+    margin-block: 7px;
+    font-size: 18px;
+    border-bottom: 2px solid var(--lineColour);
+}
+.home_dashboard .active_orders .ord_list .data{
+    padding-block: 5px;
+    background-color: var(--secondary);
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.home_dashboard .active_orders .ord_list .data:hover{
+    filter: brightness(1.2);
+}
+.home_dashboard .new_users_cont{
+    background-color: var(--secondary);
+    font-size: 22px;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.home_dashboard .new_users_cont .heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--lineColour);
+}
+.home_dashboard .new_users_cont .new_user_card{
+    display: flex;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    background-color: var(--secondary);
+    border-radius: 5px;
+    position: relative;
+}
+.home_dashboard .new_users_cont .new_user_card:hover{
+    filter: brightness(1.2);
+}
+.home_dashboard .new_users_cont .new_user_card .img{
+    height: 65px;
+    width: 65px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+.home_dashboard .new_users_cont .new_user_card .details .loc{
+    font-size: 14px;
+}
+.home_dashboard .new_users_cont .new_user_card .date{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+}

@@ -1,0 +1,48 @@
+
+.cat_manager{
+    padding-block: 50px;
+}
+.cat_manager > .heading{
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+.cat_manager label{
+    font-size: 20px;
+}
+.cat_manager .box{
+    border: 2px solid var(--lineColour);
+    text-align: center;
+    margin-block: 10px;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    background-color: var(--secondary);
+}
+.cat_manager .box:hover{
+    border: 2px solid white;
+    filter: brightness(1.2);
+}
+.cat_manager .box .no_dish{
+    font-size: 13px;
+}
+.cat_manager .box .delete{
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+    opacity: 0.5;
+    transition: 0.5s ease-in-out;
+}
+.cat_manager .box .delete:hover{
+    opacity: 1;
+}
+.cat_manager input,
+.cat_manager input:focus{
+    color: white;
+    background-color: var(--secondary);
+}

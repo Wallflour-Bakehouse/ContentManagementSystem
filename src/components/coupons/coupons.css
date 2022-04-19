@@ -1,0 +1,67 @@
+.coupons_cont{
+    padding-block: 50px;
+}
+.coupons_cont .heading{
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+.coupons_cont > .box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--lineColour);
+    font-size: 28px;
+    padding: 20px 40px;
+    width: fit-content;
+    border-radius: 5px;
+    margin-bottom: 40px;
+    cursor: pointer;
+    background-color: var(--secondary);
+    transition: 0.5s ease-in-out;
+}
+.coupons_cont > .box:hover{
+    filter: brightness(1.2);
+}
+.coupons_cont > .box .text{
+    font-size: 18px;
+    margin-left: 20px;
+}
+.coupons_cont .coupon{
+    background-color: var(--secondary);
+    padding: 30px 40px;
+    border-radius: 10px;
+    position: relative;
+}
+.coupons_cont .coupon::after,
+.coupons_cont .coupon::before{
+    content: '';
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    background-color: var(--body);
+    top: 50%;
+    border-radius: 100%;
+}
+.coupons_cont .coupon::after{
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+.coupons_cont .coupon::before{
+    right: 0;
+    transform: translate(50%, -50%);
+}
+.coupons_cont .coupon .inner_sec{
+    border: 7px solid var(--body);
+    padding: 20px;
+    font-size: 18px;
+    text-align: center;
+}
+.coupons_cont .coupon .inner_sec .details{
+    margin-bottom: 7px;
+}
+.coupons_cont .coupon .inner_sec .coupon_code{
+    font-size: 20px;
+}
+.coupons_cont .coupon .inner_sec .coupon_desc{
+    font-size: 14px;
+}
