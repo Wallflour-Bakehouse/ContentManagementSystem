@@ -9,6 +9,9 @@
 .cat_manager label{
     font-size: 20px;
 }
+.cat_manager form .error{
+    color: red;
+}
 .cat_manager .box{
     border: 2px solid var(--lineColour);
     text-align: center;
@@ -17,7 +20,6 @@
     font-size: 20px;
     border-radius: 5px;
     position: relative;
-    cursor: pointer;
     transition: 0.5s ease-in-out;
     background-color: var(--secondary);
 }
@@ -25,9 +27,14 @@
     border: 2px solid white;
     filter: brightness(1.2);
 }
+.cat_manager .box.add_new_cat{
+    cursor: pointer;
+    border: 2px dashed var(--lineColour);   
+}
 .cat_manager .box .no_dish{
     font-size: 13px;
 }
+.cat_manager .box .edit,
 .cat_manager .box .delete{
     position: absolute;
     right: 0px;
@@ -35,9 +42,16 @@
     font-size: 16px;
     cursor: pointer;
     padding: 5px 10px;
+    cursor: pointer;
     opacity: 0.5;
     transition: 0.5s ease-in-out;
 }
+.cat_manager .box .edit{
+    right: 25px;
+    font-size: 18px;
+    padding: 3px 10px;
+}
+.cat_manager .box .edit:hover,
 .cat_manager .box .delete:hover{
     opacity: 1;
 }

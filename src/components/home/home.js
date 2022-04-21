@@ -16,13 +16,13 @@ export default function Home() {
     const token = JSON.parse(localStorage.getItem("profile"))?.token
 
     useEffect(() => {
+        document.title = `Wallflour Bakehouse | CMS`
+        window.scrollTo(0, 0)
         document.querySelectorAll('.nav_ele').forEach((ele)=>{
             if(!ele.classList.contains('active')) return
             ele.classList.remove('active')
         })
         document.getElementById('1').classList.add('active')
-        document.title = `WallFlour Bakehouse | Orders`
-        window.scrollTo(0, 0)
         try{
             axios
             .get(url+'/admin/home',{
@@ -78,28 +78,28 @@ export default function Home() {
                     </div>)}
                     <div className="box sales">
                         <div className="content">
-                            <div className="text">{dashBoardBox?.monthSales}</div>
+                            <div className="text">{dashBoardBox ? dashBoardBox.monthSales : 0}</div>
                             <div className="subtext">Sales</div>
                         </div>
                         <FontAwesomeIcon icon={faCartShopping} />
                     </div>
                     <div className="box views">
                         <div className="content">
-                            <div className="text">{dashBoardBox?.monthComments}</div>
+                            <div className="text">{dashBoardBox ? dashBoardBox.monthComments : 0}</div>
                             <div className="subtext">Comments</div>
                         </div>
                         <FontAwesomeIcon icon={faComment} />
                     </div>
                     <div className="box views">
                         <div className="content">
-                            <div className="text">₹ {dashBoardBox?.totalSales}</div>
+                            <div className="text">₹ {dashBoardBox ? dashBoardBox.totalSales : 0}</div>
                             <div className="subtext">Earnings</div>
                         </div>
                         <FontAwesomeIcon icon={faMoneyBill1Wave} />
                     </div>
                     <div className="box views">
                         <div className="content">
-                            <div className="text">{orders?.length}</div>
+                            <div className="text">{orders ? orders.length : 0}</div>
                             <div className="subtext">Active Orders</div>
                         </div>
                         <FontAwesomeIcon icon={faTruckFast} />

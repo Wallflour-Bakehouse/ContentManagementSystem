@@ -3,13 +3,90 @@ import axios from 'axios'
 import {url} from '../../../url'
 import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Form, FormGroup, Label, Input, Col, FormFeedback } from "reactstrap";
 import './product_manager.css'
 
-export default function NewProduct() {
+function Card({prod}) {
+    return (
+        <div className="food_card">
+            <div className="img_cont">
+                <div className="img" style={{backgroundImage: `url(${prod.image})`}}></div>
+            </div>
+            <div className="food_name">{prod.productName}</div>
+            <div className="food_categories">
+                <div className="food_reviews"><div><FontAwesomeIcon icon={faStar} />5/5</div><span>(No Reviews)</span></div>
+                { prod.typeOfDish ==="veg" ? (
+                    <div className='type veg'><div className="circ"></div></div>
+                ):(
+                    <div className='type nonveg'><div className="circ"></div></div>
+                )}
+            </div>
+            <div className="price_cont">
+                <div className="price">₹{prod.price-(prod.price*prod.discount*0.01)}</div>
+                {prod.discount!==0 ? (
+                    <div className='discount_cont'>  
+                        <div className="discount_price">₹{prod.price}</div>
+                        <div className="discount">Save {prod.discount}%</div>
+                    </div>
+                ):(<></>)}
+            </div>
+        </div> 
+    )
+}
 
-    const initialState = {
+function ProductPreference({allPreferences, prodPreferences, setFormData, formData}){
+
+    const [calc, setCalc] = useState(false)
+    const [changeOfPref, setChangeOfPref] = useState(prodPreferences)
+
+    useEffect(()=>{
+        for(let i=0;i<prodPreferences.length;i++){
+            for(let j=0;j<allPreferences.length;j++){
+                if(allPreferences[j].preferenceName===prodPreferences[i]){
+                    allPreferences[j].active=true
+                }
+            }
+        }
+        setCalc(true)
+    })
+
+    function active(preferences){
+        const pref = document.getElementById(preferences._id).classList
+        
+        if(pref.contains('active')){
+            for(let i=0;i<=prodPreferences.length;i++){
+                if(preferences.preferenceName===prodPreferences[i]){
+                    prodPreferences.splice(i,1)
+                    pref.remove('active')
+                    return
+                }
+            }
+        }
+        else{
+            prodPreferences.push(preferences.preferenceName)
+            pref.add('active')
+        }
+    }
+
+    if(calc===true){
+        return allPreferences.map(preference=>
+            <div className="col-2" key={preference._id}>
+                <div className={"box"+(preference.active ? " active":"")} id={preference._id} onClick={()=>active(preference)}>{preference.preferenceName}</div>
+            </div>
+        )
+    }
+    else{
+        return(<></>)
+    }
+}   
+
+export default function NewProduct(props) {
+
+    const prod = useParams()
+    const token = JSON.parse(localStorage.getItem("profile"))?.token
+
+    const [formData, setFormData] = useState({
         _id: "",
         productName: "",
         productCategory: "",
@@ -26,36 +103,32 @@ export default function NewProduct() {
         image: "",
         createdAt: "",
         updatedAt: ""
-    }
-    const prod = useParams()
-    const token = JSON.parse(localStorage.getItem("profile"))?.token
+    })
+    const [allPreferences, setAllPreferences] = useState()
+    const [categories, setCategories] = useState()    
 
-    const [formData, setFormData] = useState(initialState)
-    const [prefernces, setPreferences] = useState()
-    const [categories, setCategories] = useState()
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    
     useEffect(() => {
         document.querySelectorAll('.nav_ele').forEach((ele)=>{
             if(!ele.classList.contains('active')) return
             ele.classList.remove('active')
         })
         document.getElementById('3').classList.add('active')
-        axios
-        .get(url+`/product/${prod.prodName}`)
-        .then((res)=>{
-            if(res.status===200)
-                setFormData(res.data)
-                console.log(res.data)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+        if(!props.newProd){
+            axios
+            .get(url+`/product/${prod.prodName}`)
+            .then((res)=>{
+                if(res.status===200)
+                    setFormData(res.data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        }
         axios
         .get(url+'/preference/')
         .then((res)=>{
             if(res.status===200)
-                setPreferences(res.data)
+                setAllPreferences(res.data)
         })
         .catch((error)=>{
             console.log(error)
@@ -72,11 +145,63 @@ export default function NewProduct() {
             console.log(error)
         })
     }, [])
-    if(formData&&categories&&prefernces){
+
+    function handleChange(e){
+        if(e.target.name==="discount" && (e.target.value<0 || e.target.value>100)) return
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+
+    function changeCategory(name){
+        setFormData({...formData, productCategory: name})
+    }
+
+    function changeTypeOfDish(name){
+        setFormData({...formData, typeOfDish: name})
+    }
+
+    function changeCustomisation(name){
+        setFormData({...formData, customisation: name})
+    }
+
+    function submitForm(){
+        if(formData._id!==""){
+            try{
+                axios
+                .put(url+'/admin/updateProduct/'+formData._id, formData,{
+                    headers: { "authorization": `Bearer ${token}` }
+                })
+                .then(()=>{
+                    window.location.reload()
+                })
+                .catch((error)=>{
+                    alert("Error: "+error.response.data.message)
+                })
+            } catch(error){
+                console.log(error)
+            }
+        }else{
+            try{
+                axios
+                .post(url+'/admin/new_product', formData,{
+                    headers: { "authorization": `Bearer ${token}` }
+                })
+                .then((res)=>{
+                    alert(res.data.message)
+                })
+                .catch((error)=>{
+                    alert("Error: "+error.response.data.message)
+                })
+            } catch(error){
+                console.log(error)
+            }
+        }
+    }
+
+    if(formData && categories && allPreferences){
         return (
             <div className="container product_form">
                 <div className="heading">Edit Product</div>
-                <div className="delete"><FontAwesomeIcon icon={faTrash}/></div>
+                {props.newProd?(<></>):(<div className="delete"><FontAwesomeIcon icon={faTrash}/></div>)}
                 <Form>
                     {formData?._id ? 
                     (
@@ -113,7 +238,7 @@ export default function NewProduct() {
                             <div className="cat_selection container-fluid">
                                 <div className="row">
                                     {categories.map(category=>
-                                        <div className="col-2" key={category._id}>
+                                        <div className="col-2" key={category._id} onClick={()=>changeCategory(category.categoryName)}>
                                             <div className={"box"+(formData.productCategory===category.categoryName?" active":"")}>{category.categoryName}</div>
                                         </div>
                                     )}
@@ -133,10 +258,12 @@ export default function NewProduct() {
                     <FormGroup row>
                         <Label htmlFor="discount" lg={3}>Discount</Label>
                         <Col  lg={4} >
-                            <Input type="number"  id="discount" name="price" autoComplete="off" placeholder="Discount" value={formData.discount} onChange={handleChange} />
+                            <Input type="number"  id="discount" name="discount" autoComplete="off" placeholder="Discount" value={formData.discount} onChange={handleChange} />
                         </Col>
                         <Col lg={5}>
                             <div>Enter the Discount (In Percentage)</div>
+                            <div>Current Price: ₹{formData.price-(formData.price*formData.discount*0.01)}</div>
+                            {formData.discount>0 ? (<div>Price Reduced by: ₹{formData.price-(formData.price-(formData.price*formData.discount*0.01))}</div>):(<></>)}
                         </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -144,11 +271,7 @@ export default function NewProduct() {
                         <Col lg={9}>
                             <div className="cat_selection container-fluid">
                                 <div className="row">
-                                    {prefernces.map(preference=>
-                                        <div className="col-2" key={preference._id}>
-                                            <div className={"box"+(formData.preference===preference?" active":"")}>{preference.preferenceName}</div>
-                                        </div>
-                                    )}
+                                    <ProductPreference allPreferences={allPreferences} prodPreferences={formData.preference} setFormData={setFormData} formData={formData}/>
                                 </div>
                             </div>
                         </Col>
@@ -157,8 +280,8 @@ export default function NewProduct() {
                         <Label htmlFor="description" lg={3}>Type of Dish</Label>
                         <Col lg={4}>
                             <div className="dish_type btn_cont" style={{justifyContent: "space-around"}}>
-                                <div className={"btn_ btn_small veg"+(formData.typeOfDish==="veg"?" active":"")}>Veg</div>
-                                <div className={"btn_ btn_small nonveg"+(formData.typeOfDish==="nonveg"?" active":"")}>Non Veg</div>
+                                <div className={"btn_ btn_small veg"+(formData.typeOfDish==="veg"?" active":"")} onClick={()=>changeTypeOfDish("veg")}>Veg</div>
+                                <div className={"btn_ btn_small nonveg"+(formData.typeOfDish==="nonveg"?" active":"")} onClick={()=>changeTypeOfDish("nonveg")}>Non Veg</div>
                             </div>
                         </Col>
                     </FormGroup>
@@ -182,10 +305,10 @@ export default function NewProduct() {
                     </FormGroup>
                     <FormGroup row>
                         <Label htmlFor="customisation" lg={3}>Customisation</Label>
-                        <Col  lg={4} >{console.log(formData.customisation)}
+                        <Col  lg={4} >
                             <div className="dish_type btn_cont" style={{justifyContent: "space-around"}}>
-                                <div className={"btn_ btn_small veg"+(formData.customisation?" active":"")}>True</div>
-                                <div className={"btn_ btn_small nonveg"+(formData.customisation?"":" active")}>False</div>
+                                <div className={"btn_ btn_small veg"+(formData.customisation?" active":"")} onClick={()=>changeCustomisation(true)}>True</div>
+                                <div className={"btn_ btn_small nonveg"+(formData.customisation?"":" active")} onClick={()=>changeCustomisation(false)}>False</div>
                             </div>
                         </Col>
                         <Col lg={5}>
@@ -210,17 +333,65 @@ export default function NewProduct() {
                     <FormGroup row>
                         <Label htmlFor="pincode" lg={3}>Image</Label>
                         <Col  lg={9}>
-                            <Input type="text"  id="pic" name="pic" autoComplete="off" placeholder="Product Picture" value={formData.image} onChange={handleChange} />
+                            <Input type="text"  id="image" name="image" autoComplete="off" placeholder="Product Picture" value={formData.image} onChange={handleChange} />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col lg={12}>
-                            <div className="btn_cont">
+                            <div className="btn_cont" onClick={submitForm}>
                                 <div className="btn_">Submit</div>
                             </div>
                         </Col>
                     </FormGroup>
                 </Form>
+                <div className="row preview_cont">
+                    <div className="col-12 mt-5 mb-3">
+                        <h3>Preview</h3>
+                    </div>
+                    <div className="col-12">
+                        <Card prod={formData}/> 
+                    </div>
+                </div>
+                <div className="row mt-5">
+                    <div className="col-12 col-lg-5 mb-4">
+                        <div className="img_cont_detail">
+                            <div className="img" style={{backgroundImage: `url(${formData.image})`}}></div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-lg-7">
+                        <div className="content">
+                            <div className="heading">
+                                {formData.productName}
+                                {formData.typeOfDish ==="veg" ? (
+                                    <span className='type veg'><span className="circ"></span></span>
+                                ):(
+                                    <span className='type nonveg'><span className="circ"></span></span>
+                                )}
+                            </div>
+                            <div className="rating"><FontAwesomeIcon icon={faStar}/> {formData.rating}/5</div>
+                            <div className="desc">{formData.description}</div>
+                            {formData.allergy!=="" ? (<div className="batch_size"><b>Allergy:</b> {formData.allergy}</div>):(<></>)}
+                            <div className="batch_size"><b>Batch Size:</b> {formData.batchSize}</div>
+                            <div className="price_cont">
+                                <div>
+                                    <b>Price:</b>
+                                    <span className="price ps-2">₹{formData.price-(formData.price*formData.discount*0.01)}</span>
+                                    {formData.discount!==0 ? (
+                                        <>  
+                                            <span className="discount_price">₹{formData.price}</span>
+                                            <span className="discount">Save {formData.discount}%</span>
+                                        </>
+                                    ):(<></>)}
+                                </div>
+                            </div>
+                            {formData.customisation ? (
+                                <div className="message mb-4">
+                                    <Input type="textarea" rows="3" name="customisation" autoComplete="off" placeholder="Add Customisation" />
+                                </div>
+                            ):(<></>)}
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

@@ -26,8 +26,8 @@ function App() {
         <Route exact path="/orders/order_detail" component={()=><OrderDetail />} />
         <Route exact path="/recent_comments" component={()=><RecentComments />} />
         <Route exact path="/menu_manager" component={()=><MenuManager />} />
-        <Route exact path="/menu_manager/new_product" component={()=><NewProduct />} />
-        <Route exact path="/menu_manager/edit_product/:prodName" component={()=><NewProduct />} />
+        <Route exact path="/menu_manager/new_product" component={()=><NewProduct newProd={true} />} />
+        <Route exact path="/menu_manager/edit_product/:prodName" component={()=><NewProduct newProd={false} />} />
         <Route exact path="/menu_manager/manage_categories" component={()=><ManageCategory />} />
         <Route exact path="/menu_manager/manage_preferences" component={()=><ManagePreference />} />
         <Route exact path="/messages" component={()=><Messages />} />

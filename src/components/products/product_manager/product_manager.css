@@ -77,3 +77,106 @@
     align-items: center;
     margin-top: 10px;
 }
+
+
+.product_form .img_cont_detail{
+    border-radius: 10px;
+    height: 50vh;
+    background-color: var(--secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;    
+    position: relative;
+}
+.product_form .img_cont_detail .img{
+    height: 85%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: 0.5s ease-in-out;
+}
+.product_form .content{
+    padding: 20px 30px;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+.product_form .content > .heading{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    position: relative;
+}
+.product_form .content > .heading .type{
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+.product_form .content > .heading .type .circ{
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+}
+.product_form .content > .heading .type.veg{
+    border: 1px solid green;
+}
+.product_form .content > .heading .type.veg .circ{
+    background-color: green;
+}
+.product_form .content > .heading .type.nonveg {
+    border: 1px solid rgb(228, 30, 30);
+}
+.product_form .content > .heading .type.nonveg .circ{
+    background-color: rgb(228, 30, 30);
+}
+.product_form .content .rating{
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.product_form .content .rating svg{
+    color: rgb(252,188,5);
+    font-size: 20px;
+}
+.product_form .content .desc{
+    margin-bottom: 40px;
+    text-align: justify;
+    font-size: 18px;
+}
+.product_form .content .batch_size{
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.product_form .content .price_cont{
+    width: 100%;
+    display: flex;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.product_form .content .price_cont .discount_price{
+    font-size: 14px;
+    margin-left: 5px;
+    margin-right: 10px;
+    text-decoration: line-through;
+    color: rgb(86, 89, 89);
+}
+.product_form .content .price_cont b{
+    margin-right: 10px;
+}
+.product_form .content .price_cont .discount{
+    font-size: 12px;
+    color: white;
+    background-color: var(--btnColour);
+    padding: 3px 10px;
+}
