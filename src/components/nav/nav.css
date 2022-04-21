@@ -11,6 +11,7 @@
     --primary: rgb(18,18,18);
     --secondary: rgb(53,53,53);
     --error: rgb(146, 0, 0);
+    --deleted: rgba(145, 15, 15, 0.5);
     --body: rgb(37, 37, 37);
     --lineColour: rgb(155, 155, 155);
     /* --btnColour: rgb(41,123,255); */

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {url} from '../../../url'
-import { faTrashCan, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPenSquare, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, FormGroup, Label, Input, Col, FormFeedback } from "reactstrap";
 import './category_manager.css'
@@ -100,6 +100,23 @@ export default function ManageCategory() {
         }
     }
 
+    function restoreCategory(id){
+        try{
+            axios
+            .put(url+'/admin/restoreCategory/'+id,{},{
+                headers: { "authorization": `Bearer ${token}` }
+            })
+            .then((res)=>{
+                window.location.reload()
+            })
+            .catch((error)=>{
+                alert("Error: "+error.response.data.message)
+            })
+        } catch(error){
+            console.log(error)
+        }
+    }
+
     return (
         <div className="cat_manager container">
             <div className="heading">Manage Categories</div>
@@ -129,14 +146,25 @@ export default function ManageCategory() {
                     </div>):(<></>)
                 }
                 {categories?.map(category=>
+                    !category.deleted ? (
+                        <div className="col-3" key={category._id}>
+                            <div className="box">
+                                <div className="cat_name">{category.categoryName}</div>
+                                <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
+                                <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
+                                <div className="delete" onClick={()=>deleteCategory(category._id)}><FontAwesomeIcon icon={faTrashCan} /></div>
+                            </div>
+                        </div>
+                    ):(
                     <div className="col-3" key={category._id}>
-                        <div className="box">
+                        <div className="box deleted">
                             <div className="cat_name">{category.categoryName}</div>
                             <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
                             <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
-                            <div className="delete" onClick={()=>deleteCategory(category._id)}><FontAwesomeIcon icon={faTrashCan} /></div>
+                            <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
                         </div>
-                    </div>    
+                    </div>
+                    )
                 )}
             </div>
         </div>

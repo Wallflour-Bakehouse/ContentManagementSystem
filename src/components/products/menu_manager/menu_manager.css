@@ -23,6 +23,16 @@
     font-size: 22px;
     margin-right: 20px;
 }
+.menu_manager .empty_cat{
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed var(--lineColour);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
 
 .food_card{
     border-radius: 5px;
@@ -33,6 +43,9 @@
     transition: 0.5s ease-in-out;
     color: black;
     position: relative;
+}
+.food_card.delete{
+    background-color: var(--deleted);
 }
 .food_card:hover{
     filter: brightness(1.2);

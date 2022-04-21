@@ -3,7 +3,7 @@ import axios from 'axios'
 import {url} from '../../../url'
 import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faStar, faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { Form, FormGroup, Label, Input, Col, FormFeedback } from "reactstrap";
 import './product_manager.css'
 
@@ -102,7 +102,8 @@ export default function NewProduct(props) {
         description: "",
         image: "",
         createdAt: "",
-        updatedAt: ""
+        updatedAt: "",
+        deleted: ""
     })
     const [allPreferences, setAllPreferences] = useState()
     const [categories, setCategories] = useState()    
@@ -197,11 +198,56 @@ export default function NewProduct(props) {
         }
     }
 
+    function deleteProduct(){
+        try{
+            axios
+            .delete(url+'/admin/deleteProduct/'+formData._id,{
+                headers: { "authorization": `Bearer ${token}` }
+            })
+            .then((res)=>{
+                alert(res.data.message)
+                window.location.replace("/menu_manager")
+            })
+            .catch((error)=>{
+                alert("Error: "+error.response.data.message)
+            })
+        } catch(error){
+            console.log(error)
+        }
+    }
+
+    function restoreProduct(){
+        try{
+            axios
+            .put(url+'/admin/restoreProduct/'+formData._id,{},{
+                headers: { "authorization": `Bearer ${token}` }
+            })
+            .then((res)=>{
+                alert(res.data.message)
+                window.location.replace("/menu_manager")
+            })
+            .catch((error)=>{
+                alert("Error: "+error.response.data.message)
+            })
+        } catch(error){
+            console.log(error)
+        }
+    }
+
     if(formData && categories && allPreferences){
         return (
             <div className="container product_form">
-                <div className="heading">Edit Product</div>
-                {props.newProd?(<></>):(<div className="delete"><FontAwesomeIcon icon={faTrash}/></div>)}
+                <div className="heading">Edit Product {formData.deleted ? (<span style={{fontSize: "18px", marginLeft: "5px"}}>(Product is hidden)</span>):(<></>)}</div>
+                {props.newProd?(<></>):( !formData.deleted ? 
+                    (<div className="delete" onClick={deleteProduct}><FontAwesomeIcon icon={faTrash}/></div>):(
+                        <div className="delete" onClick={restoreProduct}><FontAwesomeIcon icon={faRetweet}/></div>
+                    )
+                    )}
+                <div className="prod_submit_btn">
+                    <div className="btn_cont" onClick={submitForm}>
+                        <div className="btn_">Submit</div>
+                    </div>
+                </div>
                 <Form>
                     {formData?._id ? 
                     (
@@ -238,9 +284,9 @@ export default function NewProduct(props) {
                             <div className="cat_selection container-fluid">
                                 <div className="row">
                                     {categories.map(category=>
-                                        <div className="col-2" key={category._id} onClick={()=>changeCategory(category.categoryName)}>
+                                        !category.deleted ? (<div className="col-2" key={category._id} onClick={()=>changeCategory(category.categoryName)}>
                                             <div className={"box"+(formData.productCategory===category.categoryName?" active":"")}>{category.categoryName}</div>
-                                        </div>
+                                        </div>):(<></>)
                                     )}
                                 </div>
                             </div>
@@ -263,7 +309,7 @@ export default function NewProduct(props) {
                         <Col lg={5}>
                             <div>Enter the Discount (In Percentage)</div>
                             <div>Current Price: ₹{formData.price-(formData.price*formData.discount*0.01)}</div>
-                            {formData.discount>0 ? (<div>Price Reduced by: ₹{formData.price-(formData.price-(formData.price*formData.discount*0.01))}</div>):(<></>)}
+                            {formData.discount>0 ? (<div>Price Reduced by: ₹{(formData.price-(formData.price-(formData.price*formData.discount*0.01))).toFixed(1)}</div>):(<></>)}
                         </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -288,7 +334,7 @@ export default function NewProduct(props) {
                     <FormGroup row>
                         <Label htmlFor="batchSize" lg={3}>Batch Size</Label>
                         <Col  lg={4} >
-                            <Input type="text"  id="batchSize" name="batchSize" autoComplete="off" placeholder="Discount" value={formData.batchSize} onChange={handleChange}/>
+                            <Input type="text"  id="batchSize" name="batchSize" autoComplete="off" placeholder="Batch Size" value={formData.batchSize} onChange={handleChange}/>
                         </Col>
                         <Col lg={5}>
                             <div>Single Order Amount</div>
@@ -335,12 +381,9 @@ export default function NewProduct(props) {
                         <Col  lg={9}>
                             <Input type="text"  id="image" name="image" autoComplete="off" placeholder="Product Picture" value={formData.image} onChange={handleChange} />
                         </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col lg={12}>
-                            <div className="btn_cont" onClick={submitForm}>
-                                <div className="btn_">Submit</div>
-                            </div>
+                        <Col lg={3}></Col>
+                        <Col lg={9}>
+                            <a href="https://wallflour-bakeho.imgbb.com/" style={{paddingTop: "10px"}} target="_blank">Click To upload Pictures</a>
                         </Col>
                     </FormGroup>
                 </Form>
@@ -368,7 +411,7 @@ export default function NewProduct(props) {
                                     <span className='type nonveg'><span className="circ"></span></span>
                                 )}
                             </div>
-                            <div className="rating"><FontAwesomeIcon icon={faStar}/> {formData.rating}/5</div>
+                            <div className="rating"><FontAwesomeIcon icon={faStar}/> 5/5</div>
                             <div className="desc">{formData.description}</div>
                             {formData.allergy!=="" ? (<div className="batch_size"><b>Allergy:</b> {formData.allergy}</div>):(<></>)}
                             <div className="batch_size"><b>Batch Size:</b> {formData.batchSize}</div>
@@ -376,7 +419,7 @@ export default function NewProduct(props) {
                                 <div>
                                     <b>Price:</b>
                                     <span className="price ps-2">₹{formData.price-(formData.price*formData.discount*0.01)}</span>
-                                    {formData.discount!==0 ? (
+                                    {formData.discount>0 ? (
                                         <>  
                                             <span className="discount_price">₹{formData.price}</span>
                                             <span className="discount">Save {formData.discount}%</span>

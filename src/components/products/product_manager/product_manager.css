@@ -28,6 +28,11 @@
 .product_form label{
     font-size: 18px;
 }
+.product_form .prod_submit_btn{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
 .product_form input,
 .product_form input:focus,
 .product_form textarea,

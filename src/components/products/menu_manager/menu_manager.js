@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faArrowsSplitUpAndLeft, faStar, faHeart, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import './menu_manager.css'
 
-function Card({prod}) {
-    return (
-        <div className="col-12 col-md-4 col-lg-3 mt-4">
+function Card({categoryProducts}) {
+    return categoryProducts.map(prod=>
+        <div className="col-12 col-md-4 col-lg-3 mt-4" key={prod._id}>
             <Link to={`/menu_manager/edit_product/${prod.productName}`}>
-                <div className="food_card">
+                <div className={"food_card"+(prod.deleted ? " delete":"")}>
                     <div className="img_cont">
                         <div className="img" style={{backgroundImage: `url(${prod.image})`}}></div>
                     </div>
@@ -54,15 +54,13 @@ export default function MenuManager() {
         })
         document.getElementById('3').classList.add('active')
         axios
-        .get(url+'/admin/allProducts',{
-            headers: { Authorization: `Bearer ${token}` }
-        })
+        .get(url+'/product/')
         .then((res)=>{
             if(res.status===200)
                 setProducts(res.data.reverse())
         })
         .catch((error)=>{
-            console.log(error)
+            alert("Error: "+error.response.data.message)
         })
     }, [])
     return (
@@ -95,10 +93,17 @@ export default function MenuManager() {
                 </div>
             </div>
             <div className="row prod_cont">
-                {products?.map((prod)=>
-                    <Card prod={prod} key={prod._id}/>
-                )}
+            {products?.map((prod)=>(
+                <div className="row section mb-5" key={prod._id}>
+                    <div className="col-12">
+                        <div className="heading">{prod.categoryName}</div>
+                    </div>
+                    {prod.categoryProducts.length > 0 ? (
+                        <Card categoryProducts={prod.categoryProducts} />    
+                    ):(<div className='empty_cat'>No Products In This Category</div>)}
+                </div>))}
             </div>
         </div>
     )
 }
+;
