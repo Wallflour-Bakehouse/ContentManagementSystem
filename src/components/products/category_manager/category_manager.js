@@ -13,6 +13,7 @@ export default function ManageCategory() {
         id: "",
         categoryName: ""
     })
+    const [currentCategory, setCurrentCategory] = useState()
     const [categories, setCategories] = useState()
 
     useEffect(() => {
@@ -42,10 +43,12 @@ export default function ManageCategory() {
     }
 
     function setInput(name,id){
+        setCurrentCategory(name)
         setNewCategory({id: id, categoryName: name})
     }
 
     function submitForm(){
+        if(newCategory.categoryName.length===0) return alert("Category Name Can Not Be Empty!")
         if(newCategory.id!=''){
             try{
                 axios
@@ -120,12 +123,12 @@ export default function ManageCategory() {
     return (
         <div className="cat_manager container">
             <div className="heading">Manage Categories</div>
+            {currentCategory ? (<h5 className='mb-4'>Editing: {currentCategory}</h5>):(<></>)}
             <Form>
                 <FormGroup row>
                     <Label htmlFor="name" lg={2}>Category Name</Label>
                     <Col lg={5} >
                         <Input type="text" id="category" name="category" autoComplete="off" placeholder="Category Name" value={newCategory.categoryName} onChange={handleChange} />
-                        {/* <FormFeedback>{errors.name}</FormFeedback> */}
                     </Col>
                     <Col lg={1} style={{display: "grid", placeContent: "center"}}>
                         <div className={newCategory.categoryName.length>25 ? 'error':" "}>Length: {newCategory.categoryName.length}</div>
@@ -160,8 +163,12 @@ export default function ManageCategory() {
                         <div className="box deleted">
                             <div className="cat_name">{category.categoryName}</div>
                             <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
-                            <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
-                            <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
+                            {category.categoryName!=="Trash" ? (
+                                <>
+                                    <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
+                                    <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
+                                </>
+                            ):(<></>)}
                         </div>
                     </div>
                     )

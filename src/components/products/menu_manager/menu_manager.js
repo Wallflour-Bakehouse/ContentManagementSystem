@@ -45,7 +45,6 @@ function Card({categoryProducts}) {
 export default function MenuManager() {
 
     const [products, setProducts] = useState()
-    const token = JSON.parse(localStorage.getItem("profile"))?.token
 
     useEffect(() => {
         document.querySelectorAll('.nav_ele').forEach((ele)=>{

@@ -218,8 +218,11 @@ export default function NewProduct(props) {
 
     function restoreProduct(){
         try{
+            if(formData.productCategory==="Trash") return alert("Select A Category To Restore")
             axios
-            .put(url+'/admin/restoreProduct/'+formData._id,{},{
+            .put(url+'/admin/restoreProduct/'+formData._id,{
+                productCategory: formData.productCategory
+            },{
                 headers: { "authorization": `Bearer ${token}` }
             })
             .then((res)=>{
@@ -239,15 +242,16 @@ export default function NewProduct(props) {
             <div className="container product_form">
                 <div className="heading">Edit Product {formData.deleted ? (<span style={{fontSize: "18px", marginLeft: "5px"}}>(Product is hidden)</span>):(<></>)}</div>
                 {props.newProd?(<></>):( !formData.deleted ? 
-                    (<div className="delete" onClick={deleteProduct}><FontAwesomeIcon icon={faTrash}/></div>):(
-                        <div className="delete" onClick={restoreProduct}><FontAwesomeIcon icon={faRetweet}/></div>
-                    )
-                    )}
-                <div className="prod_submit_btn">
-                    <div className="btn_cont" onClick={submitForm}>
-                        <div className="btn_">Submit</div>
+                    (<div className="delete" onClick={deleteProduct}><FontAwesomeIcon icon={faTrash}/></div>):
+                    (<div className="delete" onClick={restoreProduct}><FontAwesomeIcon icon={faRetweet}/></div>)
+                )}
+                {!formData.deleted ? (
+                    <div className="prod_submit_btn">
+                        <div className="btn_cont" onClick={submitForm}>
+                            <div className="btn_">Submit</div>
+                        </div>
                     </div>
-                </div>
+                ):(<></>)}
                 <Form>
                     {formData?._id ? 
                     (
@@ -383,7 +387,7 @@ export default function NewProduct(props) {
                         </Col>
                         <Col lg={3}></Col>
                         <Col lg={9}>
-                            <a href="https://wallflour-bakeho.imgbb.com/" style={{paddingTop: "10px"}} target="_blank">Click To upload Pictures</a>
+                            <a href="https://wallflour-bakeho.imgbb.com/" style={{paddingTop: "10px"}} target="_blank">Click To Upload Pictures</a>
                         </Col>
                     </FormGroup>
                 </Form>
