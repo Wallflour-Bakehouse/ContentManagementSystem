@@ -25,3 +25,23 @@
     text-align: center;
     margin-bottom: 5px;
 }
+
+.user_cont .dp_box .box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary);
+    border: 2px solid var(--lineColour);
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+.user_cont .dp_box .box:hover{
+    filter: brightness(1.2);
+}
+.user_cont .dp_box .box svg{
+    font-size: 24px;
+    margin-right: 10px;
+}

@@ -35,20 +35,24 @@ function Card({prod}) {
     )
 }
 
-function ProductPreference({allPreferences, prodPreferences, setFormData, formData}){
+function ProductPreference({ allPreferences, prodPreferences }){
 
     const [calc, setCalc] = useState(false)
-    const [changeOfPref, setChangeOfPref] = useState(prodPreferences)
 
     useEffect(()=>{
-        for(let i=0;i<prodPreferences.length;i++){
-            for(let j=0;j<allPreferences.length;j++){
-                if(allPreferences[j].preferenceName===prodPreferences[i]){
-                    allPreferences[j].active=true
+        if(prodPreferences.length>0){
+            for(let i=0;i<prodPreferences.length;i++){
+                for(let j=0;j<allPreferences.length;j++){
+                    if(allPreferences[j].preferenceName===prodPreferences[i]){
+                        allPreferences[j].active=true
+                    }
                 }
             }
+            setCalc(true)
         }
-        setCalc(true)
+        else{
+            setCalc(true)
+        }
     })
 
     function active(preferences){
@@ -321,7 +325,7 @@ export default function NewProduct(props) {
                         <Col lg={9}>
                             <div className="cat_selection container-fluid">
                                 <div className="row">
-                                    <ProductPreference allPreferences={allPreferences} prodPreferences={formData.preference} setFormData={setFormData} formData={formData}/>
+                                    <ProductPreference allPreferences={allPreferences} prodPreferences={formData.preference} />
                                 </div>
                             </div>
                         </Col>

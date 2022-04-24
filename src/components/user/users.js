@@ -3,7 +3,7 @@ import axios from 'axios'
 import {url} from '../../url'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import './users.css'
 
 function UserCard({user}){
@@ -54,6 +54,14 @@ export default function Users() {
                 <input type="text" placeholder="Search for a User" name="search" />
                 <div className="search_btn">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />    
+                </div>
+            </div>
+            <div className="row dp_box pt-4 pb-4">
+            <div className="col-3">
+                    <Link to='/dp_manager' className="box">
+                        <FontAwesomeIcon icon={faCircleUser} />
+                        <div className="text">Manage DP</div>
+                    </Link>
                 </div>
             </div>
             <div className="heading mb-4">Admin</div>

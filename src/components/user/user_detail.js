@@ -25,12 +25,29 @@ export default function UserDetail() {
         })
         .then((res)=>{
             setUser(res.data)
-            console.log(res.data)
         })
         .catch((error)=>{
             console.log(error)
         })
     }, [])
+
+    function deleteComment(id){
+        try{
+            axios
+            .delete(url+'/admin/deleteComment/'+id,{
+                headers: { "authorization": `Bearer ${token}` }
+            })
+            .then((res)=>{
+                window.location.reload()
+            })
+            .catch((error)=>{
+                alert("Error: "+error.response.data.message)
+            })
+        } catch(error){
+            console.log(error)
+        }
+    }
+
     if(user){
         return (
             <div className="user_details_cont container">
@@ -68,10 +85,13 @@ export default function UserDetail() {
                         <b>Comments:</b>
                         {user.comments.map((comment)=>
                             <div className="address_card" key={comment._id}>
-                                <div>Product Name: {comment.productName}</div>
-                                <div>Rating: {comment.rating}/5</div>
-                                <div>Date: {comment.createdAt}</div>
+                                <div className='d-flex'>
+                                    <div className='pe-3'>Product Name: {comment.productName}</div>
+                                    <div className='pe-3'>Rating: {comment.rating}/5</div>
+                                    <div>Date: {moment(comment.createdAt).format("DD/MM/YYYY (hh:mm A)")}</div>
+                                </div>
                                 <div>Comment: {comment.comment}</div>
+                                <div className="delete" onClick={()=>deleteComment(comment._id)}><FontAwesomeIcon icon={faTrashCan} /></div>
                             </div>
                         )}
                     </div>

@@ -39,6 +39,7 @@ export default function ManagePrefernce() {
         setNewPreference({...newPreference, [e.target.name]: e.target.value})
     }
     function resetForm(){
+        setCurrentPreference("")
         setNewPreference({id: "", preferenceName: "", image: ""})
     }
 
@@ -48,11 +49,13 @@ export default function ManagePrefernce() {
     }
 
     function submitForm(){
+        if(newPreference.preferenceName.length===0) return alert("Preference Name Can Not Be Empty")
+        if(newPreference.image.length===0) return alert("Preference Image Can Not Be Empty")
         if(newPreference.id!=''){
             try{
                 axios
                 .put(url+'/admin/updatePreference/'+newPreference.id, {
-                    categoryName: newPreference.preferenceName,
+                    preferenceName: newPreference.preferenceName,
                     image: newPreference.image
                 },{
                     headers: { "authorization": `Bearer ${token}` }
@@ -93,7 +96,7 @@ export default function ManagePrefernce() {
             .delete(url+'/admin/deletePreference/'+id,{
                 headers: { "authorization": `Bearer ${token}` }
             })
-            .then((res)=>{
+            .then(()=>{
                 window.location.reload()
             })
             .catch((error)=>{
@@ -108,6 +111,7 @@ export default function ManagePrefernce() {
         <div className="pref_manager container">
             <div className="heading">Manage Prefernces</div>
             {currentPreference ? (<h5 className='mb-4'>Editing: {currentPreference}</h5>):(<></>)}
+            {newPreference.id ? (<div className="delete" onClick={()=>deletePreference(newPreference.id)}><FontAwesomeIcon icon={faTrashCan} /></div>):(<></>)}
             <Form>
                 <FormGroup row>
                     <Label htmlFor="name" lg={2}>Preference Name</Label>
@@ -128,8 +132,8 @@ export default function ManagePrefernce() {
                             <a href="https://wallflour-bakeho.imgbb.com/" style={{paddingTop: "10px"}} target="_blank">Click To Upload Pictures</a>
                         </Col>
                     <Col lg={12} >
-                        <div className="btn_cont m-3" onClick={submitForm}>
-                            <div className="btn_ btn_small">Add</div>
+                        <div className="btn_cont m-3">
+                            <div className="btn_ btn_small" onClick={submitForm}>{newPreference.id ? "Update":"Add"}</div>
                         </div>
                     </Col>
                 </FormGroup>
@@ -138,16 +142,14 @@ export default function ManagePrefernce() {
                 {newPreference.id!=="" ?
                     (<div className="col-12 mb-5" onClick={resetForm}>
                         <div className="box add_new_cat">
-                            <div className="cat_name">Click Here To Add a New Category</div>
+                            <div className="cat_name">Click Here To Add a New Preference</div>
                         </div>
                     </div>):(<></>)
                 }
                 {prefernces?.map(preference=>
                     <div className="col-6 col-md-3 col-lg-2" key={preference._id}>
-                        <div className="pref_card" style={{backgroundImage: `url(${preference.image})`}}>
+                        <div className="pref_card" style={{backgroundImage: `url(${preference.image})`}} onClick={()=>setInput(preference.preferenceName, preference._id, preference.image)}>
                             <div className="overlay">{preference.preferenceName}</div>
-                            <div className="edit" onClick={()=>setInput(preference.preferenceName, preference._id, preference.image)}><FontAwesomeIcon icon={faPenSquare} /></div>
-                            <div className="delete" onClick={()=>deletePreference(preference._id)}><FontAwesomeIcon icon={faTrashCan} /></div>
                         </div>
                     </div>
                 )}

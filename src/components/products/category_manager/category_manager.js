@@ -39,6 +39,7 @@ export default function ManageCategory() {
         setNewCategory({...newCategory, categoryName: e.target.value})
     }
     function resetForm(){
+        setCurrentCategory("")
         setNewCategory({id: "", categoryName: ""})
     }
 
@@ -135,7 +136,7 @@ export default function ManageCategory() {
                     </Col>
                     <Col lg={3} >
                         <div className="btn_cont">
-                            <div className="btn_ btn_small"  onClick={submitForm}>Add</div>
+                        <div className="btn_ btn_small" onClick={submitForm}>{newCategory.id ? "Update":"Add"}</div>
                         </div>
                     </Col>
                 </FormGroup>

@@ -19,7 +19,26 @@
     color: white;
     background-color: var(--secondary);
 }
-
+.pref_manager .delete{
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    border: 2px solid var(--lineColour);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    background-color: var(--error);
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+.pref_manager .delete:hover{
+    filter: brightness(1.3);
+    border: 2px solid white;
+}
 .pref_manager .box.add_new_cat{
     padding-block: 20px;
     border-radius: 5px;

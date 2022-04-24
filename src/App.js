@@ -9,10 +9,10 @@ import NewProduct from './components/products/product_manager/product_manager';
 import ManageCategory from './components/products/category_manager/category_manager';
 import ManagePreference from './components/products/preference_manager/preference_manager';
 import Messages from './components/messages/messages';
-import MessageDetail from './components/messages/message_detail';
 import RecentComments from './components/comments/recent_comments';
 import Users from './components/user/users';
 import UserDetail from './components/user/user_detail';
+import DpManager from './components/user/dp_manager';
 import Coupons from './components/coupons/coupons';
 
 
@@ -31,9 +31,9 @@ function App() {
         <Route exact path="/menu_manager/manage_categories" component={()=><ManageCategory />} />
         <Route exact path="/menu_manager/manage_preferences" component={()=><ManagePreference />} />
         <Route exact path="/messages" component={()=><Messages />} />
-        <Route exact path="/messages/message_detail" component={()=><MessageDetail />} />
         <Route exact path="/users" component={()=><Users />} />
         <Route exact path="/user/:userId" component={()=><UserDetail />} />
+        <Route exact path="/dp_manager" component={()=><DpManager />} />
         <Route exact path="/coupons" component={()=><Coupons />} />
         <Redirect to="/" />
       </Switch>

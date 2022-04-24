@@ -9,14 +9,13 @@
     margin-top: 20px;
 }
 .recent_comments .comment_cont{
-    margin: 20px;
-    padding: 10px 30px;
+    width: 100%;
+    margin-block: 10px;
+    padding: 20px 30px;
     display: flex;
     align-items: center;
-    justify-content: center;
     background-color: var(--secondary);
     border-radius: 10px;
-    width: fit-content;
     border: 2px solid var(--lineColour);
     position: relative;
 }
@@ -51,8 +50,7 @@
     text-align: justify;
     margin-right: 30px;
 }
-.recent_comments .comment_cont .top_line .delete,
-.recent_comments .comment_cont .top_line .edit{
+.recent_comments .comment_cont .top_line .delete{
     position: absolute;
     bottom: 8px;
     right: 8px;
@@ -67,10 +65,6 @@
     cursor: pointer;
     color: white;
 }
-.recent_comments .comment_cont .bottom_line .edit{
-    right: 47px;
-}
-.recent_comments .comment_cont .bottom_line .delete:hover,
-.recent_comments .comment_cont .bottom_line .edit:hover{
+.recent_comments .comment_cont .bottom_line .delete:hover{
     transform: scale(1.05);
 }

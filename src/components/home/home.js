@@ -32,7 +32,7 @@ export default function Home() {
                 setOrders(res.data.activeOrders)
                 setDashBoardBox(res.data.dashBoard)
                 setNewUser(res.data.newUsers)
-                setOrderControl(res.data.orderControl[0].status)
+                setOrderControl(res.data.orderControl.status)
             })
             .catch((error)=>{
                 console.log(error)
