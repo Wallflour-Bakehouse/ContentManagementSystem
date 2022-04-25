@@ -4,7 +4,7 @@
     position: relative;
 }
 .message_cont .chat_header{
-    background-color: var(--secondary);
+    background-color: var(--chat);
     padding: 10px 30px;
     position: fixed;
     top: 0;
@@ -18,12 +18,10 @@
     height: 70px;
 }
 .message_cont .chat_header .dp{
-    border: 2px solid white;
     min-width: 50px;
     min-height: 50px;
     border-radius: 100%;
     margin-right: 20px;
-    /* background-image: url(logo.jpeg); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -34,36 +32,127 @@
     left: 80px;
     bottom: 0;
     width: 20vw;
-    background-color: var(--secondary);
-    z-index: 5;
+    background-color: rgb(17,27,33);
+    z-index: 4;
+    overflow-y: scroll;
 }
-
+.message_cont .user_board .search_sec{
+    padding-inline: 10px;
+}
+.message_cont .user_board .search_cont{
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgb(42,57,66);
+}
+.message_cont .user_board .unknown_user{
+    text-align: center;
+    padding: 17px 10px;
+    cursor: pointer;
+    border-top: 1px solid var(--chat);
+    border-bottom: 1px solid var(--chat);
+    background-color: rgb(17,27,33);
+    transition: 0.3s ease-in-out;
+}
+.message_cont .user_board .unknown_user:hover{
+    filter: brightness(1.4);
+}
+.message_cont .user_board .unknown_user svg{
+    font-size: 20px;
+    margin-right: 5px;
+}
+.message_cont .user_board .user{
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: rgb(17,27,33);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+.message_cont .user_board .user:hover{
+    filter: brightness(1.4);
+}
+.message_cont .user_board .user.active{
+    filter: brightness(1.8);
+}
+.message_cont .user_board .user .dp{
+    min-height: 50px;
+    min-width: 50px;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    margin-left: 5px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.message_cont .user_board .user .chat_details{
+    margin-inline: 5px;
+    padding-inline: 5px;
+    padding-block: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: 1px solid var(--chat);
+    border-bottom: 1px solid var(--chat);
+}
+.message_cont .user_board .user .name{
+    font-size: 15px;
+    font-weight: 500;
+}
+.message_cont .user_board .user .chat_details .msg_preview{
+    font-size: 11px;
+}
+.message_cont .user_board .user .unread_message_alert{
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    background-color: var(--btnColour);
+    height: 22px;
+    width: 22px;
+    border-radius: 100%;
+    display: grid;
+    place-items: center;
+    transform: translateY(-50%);
+}
 .message_cont .chat_section{
     position: absolute;
-    top: 70px;
-    left: calc(20vw);
+    top: 0;
+    left: 20vw;
     right: 0;
-    bottom: 80px;
+    bottom: 0;
+    padding-top: 70px;
+    padding-bottom: 90px;
     overflow-y: scroll;
-    border: 3px solid var(--lineColour);
+    padding-inline: 15px;
+    display: flex;
+    flex-direction: column;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(./background.jpg);
+}
+.message_cont .chat_section .conversation_sec{
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
 }
-
-.message_cont .chat_section::-webkit-scrollbar,
-.message_cont .chat_footer textarea::-webkit-scrollbar{
-    width: 0.4vw;
-    min-width: 3px;
-}
-.message_cont .chat_section::-webkit-scrollbar-thumb,
-.message_cont .chat_footer textarea::-webkit-scrollbar-thumb{
-    border: none;
-    background-color: var(--lineColour);
+.message_cont .chat_section .conversation_sec .date{
+    align-self: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgba(32, 44, 51, 0.69);
+    margin-bottom: 5px;
+    color: rgb(134, 150, 160);
+    font-size: 14px;
 }
 .message_cont .chat_section .message{
     position: relative;
-    padding: 10px 20px;
-    background-color: rgb(245, 245, 245);
+    padding: 10px 10px;
+    padding-bottom: 18px;
+    background-color: var(--chat);
+    min-width: 80px;
     max-width: 65%;
     width: fit-content;
     border-radius: 10px;
@@ -71,6 +160,13 @@
     margin-top: 10px;
     align-self: flex-start;
     font-size: 14px;
+}
+.message_cont .chat_section .message .time{
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    font-weight: 300;
+    font-size: 10px;
 }
 .message_cont .chat_section .message::after{
     content: '';
@@ -80,14 +176,14 @@
     height: 15px;
     width: 10px;
     clip-path: polygon(100% 0, 100% 100%, 0 0);
-    background-color: rgb(245, 245, 245);
+    background-color: var(--chat);
 }
 .message_cont .chat_section .message.active{
     align-self: flex-end;
     right: 0;
     border-radius: 10px;
     border-top-right-radius: 0px;
-    background-color: var(--secondary);
+    background-color: rgb(0,92,75);
 }
 .message_cont .chat_section .message.active::after{
     display: none;
@@ -100,6 +196,19 @@
     height: 15px;
     width: 10px;
     clip-path: polygon(0 100%, 100% 0, 0 0);
+    background-color: rgb(0,92,75);
+}
+.message_cont .user_board::-webkit-scrollbar,
+.message_cont .chat_section::-webkit-scrollbar,
+.message_cont .chat_footer textarea::-webkit-scrollbar{
+    width: 0.3vw;
+    min-width: 3px;
+}
+.message_cont .user_board::-webkit-scrollbar-thumb,
+.message_cont .chat_section::-webkit-scrollbar-thumb,
+.message_cont .chat_footer textarea::-webkit-scrollbar-thumb{
+    border-radius: 0px;
+    border: none;
     background-color: var(--secondary);
 }
 
@@ -107,7 +216,7 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    background-color: var(--secondary);
+    background-color: var(--chat);
     height: 12%;
     max-height: 80px;
     min-height: 50px;
@@ -121,7 +230,7 @@
     height: 100%;
 }
 .message_cont .chat_footer .input textarea{
-    background-color: var(--body);
+    background-color: rgb(42,57,66);
     outline: none;
     border: none;
     padding: 5px 10px;

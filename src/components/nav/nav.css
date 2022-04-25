@@ -10,6 +10,7 @@
 :root{
     --primary: rgb(18,18,18);
     --secondary: rgb(53,53,53);
+    --chat: rgb(32,44,51);
     --error: rgb(146, 0, 0);
     --deleted: rgba(145, 15, 15, 0.5);
     --body: rgb(37, 37, 37);
@@ -119,8 +120,8 @@ body{
 .search_cont .search_btn{
     background-color: var(--btnColour);
     color: var(--btnFontcolour);
-    height: 40px;
-    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
     border-radius: 100%;
     display: grid;
     place-items: center;
