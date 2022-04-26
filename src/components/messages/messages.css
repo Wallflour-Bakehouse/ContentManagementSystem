@@ -17,6 +17,26 @@
     align-items: center;
     height: 70px;
 }
+.message_cont .chat_header .delete_message{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    height: 45px;
+    width: 45px;
+    background-color: var(--error);
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--lineColour);
+    border-radius: 100%;
+    cursor: pointer;
+    filter: brightness(0.8);
+    transition: 0.3s ease-in-out;
+}
+.message_cont .chat_header .delete_message:hover{
+    filter: brightness(1);
+    border: 2px solid white;
+}
 .message_cont .chat_header .dp{
     min-width: 50px;
     min-height: 50px;
@@ -35,6 +55,7 @@
     background-color: rgb(17,27,33);
     z-index: 4;
     overflow-y: scroll;
+    outline: none;
 }
 .message_cont .user_board .search_sec{
     padding-inline: 10px;
@@ -45,7 +66,9 @@
     background-color: rgb(42,57,66);
 }
 .message_cont .user_board .unknown_user{
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 17px 10px;
     cursor: pointer;
     border-top: 1px solid var(--chat);
@@ -59,6 +82,17 @@
 .message_cont .user_board .unknown_user svg{
     font-size: 20px;
     margin-right: 5px;
+}
+.message_cont .user_board .unknown_user .secretMessageCount{
+    background-color: var(--btnColour);
+    height: 22px;
+    width: 22px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    font-size: 10px;
 }
 .message_cont .user_board .user{
     display: flex;
@@ -104,7 +138,7 @@
     font-size: 11px;
 }
 .message_cont .user_board .user .unread_message_alert{
-    font-size: 12px;
+    font-size: 10px;
     position: absolute;
     top: 50%;
     right: 5px;
@@ -112,8 +146,9 @@
     height: 22px;
     width: 22px;
     border-radius: 100%;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transform: translateY(-50%);
 }
 .message_cont .chat_section{
@@ -201,7 +236,7 @@
 .message_cont .user_board::-webkit-scrollbar,
 .message_cont .chat_section::-webkit-scrollbar,
 .message_cont .chat_footer textarea::-webkit-scrollbar{
-    width: 0.3vw;
+    width: 0.4vw;
     min-width: 3px;
 }
 .message_cont .user_board::-webkit-scrollbar-thumb,
@@ -209,7 +244,7 @@
 .message_cont .chat_footer textarea::-webkit-scrollbar-thumb{
     border-radius: 0px;
     border: none;
-    background-color: var(--secondary);
+    background-color: rgba(225, 225, 225, 0.2);
 }
 
 .message_cont .chat_footer{

@@ -176,6 +176,7 @@ export default function NewProduct(props) {
                     headers: { "authorization": `Bearer ${token}` }
                 })
                 .then(()=>{
+                    alert("Product Updated")
                     window.location.reload()
                 })
                 .catch((error)=>{

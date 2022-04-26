@@ -9,7 +9,6 @@
     margin-top: 20px;
 }
 .orders_cont .orders .order_card{
-    margin: 20px;
     padding: 20px;
     border: 2px solid var(--lineColour);
     font-size: 17px;

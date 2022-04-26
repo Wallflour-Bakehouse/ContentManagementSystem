@@ -23,7 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={()=><Home />} />
         <Route exact path="/orders" component={()=><Orders />} />
-        <Route exact path="/orders/order_detail" component={()=><OrderDetail />} />
+        <Route exact path="/orders/:orderId" component={()=><OrderDetail />} />
         <Route exact path="/recent_comments" component={()=><RecentComments />} />
         <Route exact path="/menu_manager" component={()=><MenuManager />} />
         <Route exact path="/menu_manager/new_product" component={()=><NewProduct newProd={true} />} />

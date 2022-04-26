@@ -28,7 +28,7 @@ export default function ManageCategory() {
             })
             .then((res)=>{
                 if(res.status===200)
-                    setCategories(res.data)
+                    setCategories(res.data.reverse())
             })
             .catch((error)=>{
                 console.log(error)
@@ -150,29 +150,46 @@ export default function ManageCategory() {
                     </div>):(<></>)
                 }
                 {categories?.map(category=>
-                    !category.deleted ? (
+                    category.categoryName === "Trash" ? (
                         <div className="col-3" key={category._id}>
-                            <div className="box">
+                            <div className="box deleted">
                                 <div className="cat_name">{category.categoryName}</div>
                                 <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
-                                <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
-                                <div className="delete" onClick={()=>deleteCategory(category._id)}><FontAwesomeIcon icon={faTrashCan} /></div>
+                                {category.categoryName!=="Trash" ? (
+                                    <>
+                                        <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
+                                        <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
+                                    </>
+                                ):(<></>)}
                             </div>
                         </div>
-                    ):(
-                    <div className="col-3" key={category._id}>
-                        <div className="box deleted">
-                            <div className="cat_name">{category.categoryName}</div>
-                            <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
-                            {category.categoryName!=="Trash" ? (
-                                <>
+                    ):(<></>)
+                )}
+                {categories?.map(category=>
+                    category.categoryName !== "Trash" ? (
+                        !category.deleted ? (
+                            <div className="col-3" key={category._id}>
+                                <div className="box">
+                                    <div className="cat_name">{category.categoryName}</div>
+                                    <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
                                     <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
-                                    <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
-                                </>
-                            ):(<></>)}
+                                    <div className="delete" onClick={()=>deleteCategory(category._id)}><FontAwesomeIcon icon={faTrashCan} /></div>
+                                </div>
+                            </div>
+                        ):(
+                        <div className="col-3" key={category._id}>
+                            <div className="box deleted">
+                                <div className="cat_name">{category.categoryName}</div>
+                                <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
+                                {category.categoryName!=="Trash" ? (
+                                    <>
+                                        <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
+                                        <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
+                                    </>
+                                ):(<></>)}
+                            </div>
                         </div>
-                    </div>
-                    )
+                    )):(<></>)
                 )}
             </div>
         </div>

@@ -92,15 +92,30 @@ export default function MenuManager() {
                 </div>
             </div>
             <div className="row prod_cont">
-            {products?.map((prod)=>(
-                <div className="row section mb-5" key={prod._id}>
-                    <div className="col-12">
-                        <div className="heading">{prod.categoryName}</div>
-                    </div>
-                    {prod.categoryProducts.length > 0 ? (
-                        <Card categoryProducts={prod.categoryProducts} />    
-                    ):(<div className='empty_cat'>No Products In This Category</div>)}
-                </div>))}
+                {products?.map((prod)=>(
+                    prod.categoryName==="Trash" ? (
+                    <div className="row section mb-5" key={prod._id}>
+                        <div className="col-12">
+                            <div className="heading">{prod.categoryName}</div>
+                        </div>
+                        {prod.categoryProducts.length > 0 ? (
+                            <Card categoryProducts={prod.categoryProducts} />    
+                        ):(<div className='empty_cat'>No Products In This Category</div>)}
+                    </div>):(<></>)
+                ))}
+            </div>
+            <div className="row prod_cont">
+                {products?.map((prod)=>(
+                    prod.categoryName!=="Trash" ? (
+                    <div className="row section mb-5" key={prod._id}>
+                        <div className="col-12">
+                            <div className="heading">{prod.categoryName}</div>
+                        </div>
+                        {prod.categoryProducts.length > 0 ? (
+                            <Card categoryProducts={prod.categoryProducts} />    
+                        ):(<div className='empty_cat'>No Products In This Category</div>)}
+                    </div>):(<></>)
+                ))}
             </div>
         </div>
     )
