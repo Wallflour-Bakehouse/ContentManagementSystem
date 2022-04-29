@@ -148,6 +148,9 @@ body{
     z-index: 5;
     transition: 0.25s ease-in-out;
 }
+.nav_bar.hidden{
+    display: none;
+}
 .nav_bar .brand{
     position: relative;
     display: flex;

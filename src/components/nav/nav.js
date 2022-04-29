@@ -4,7 +4,7 @@ import { faHouseChimney, faListUl, faUsers, faMessage, faTruckFast, faBell, faCo
 import { Link } from 'react-router-dom';
 import './nav.css'
 
-export default function Nav() {
+export default function Nav(props) {
     const [navId, setNavId] = useState()
 
     function navMouseOver(){
@@ -38,7 +38,7 @@ export default function Nav() {
 
     return (
         <>
-            <div className='nav_bar active' onMouseOver={()=>{addActive()}} onMouseOut={()=>navMouseOut()}>
+            <div className={"nav_bar active"+ (props.navShow ? " hidden":"")} onMouseOver={()=>{addActive()}} onMouseOut={()=>navMouseOut()}>
                 <div className="brand">
                     <div className="logo"></div>
                     <div className="text">Wallflour Bakehouse</div>

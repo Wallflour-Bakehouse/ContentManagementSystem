@@ -1,8 +1,60 @@
+.modal .modal-content{
+    background-color: var(--body);
+}
+.btn-close{
+    color: white!important;
+}
+.btn-close:hover{
+    color: white!important;
+}
 .order_detail{
     padding-top: 50px;
     padding-left: 90px!important;
     padding-right: 3vw!important;
     max-width: 1500px;
+}
+.order_detail .delete.restore{
+    top: 140px;
+}
+.order_detail .delete.restore::after{
+    content: 'Restore Order';
+}
+.order_detail .delete{
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    border: 2px solid var(--lineColour);
+    background-color: var(--error);
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+    display: grid;
+    place-content: center;
+    border-radius: 100%;
+    color: white;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+.order_detail .delete::after{
+    content: 'Delete Order';
+    position: absolute;
+    opacity: 0;
+    right: 55px;
+    bottom: 50%;
+    padding: 2px 10px;
+    font-size: 12px;
+    width: max-content;
+    background-color: var(--error);
+    pointer-events: none;
+    transform: translateY(100%);
+    transition: 0.3s ease-in-out;
+}
+.order_detail .delete:hover::after{
+    transform: translateY(50%);
+    opacity: 1;
+}
+.order_detail .delete:hover{
+    filter: brightness(1.1);
 }
 .order_detail form .row div{
     display: flex;

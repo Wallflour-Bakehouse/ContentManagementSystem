@@ -67,6 +67,9 @@
     cursor: pointer;
     border-radius: 5px;
 }
+.home_dashboard .active_orders .ord_list .data.delete{
+    background-color: rgba(201, 0, 0, 0.3);
+}
 .home_dashboard .active_orders .ord_list .data:hover{
     filter: brightness(1.2);
 }

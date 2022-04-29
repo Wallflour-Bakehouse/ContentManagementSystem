@@ -7,15 +7,35 @@ import { faCheck, faCartShopping, faComment, faMoneyBill1Wave, faTruckFast, faXm
 import { Link } from 'react-router-dom'
 import './home.css'
 
-export default function Home() {
+function OrderCard(props){
+    return props.allOrders?.map(order=>
+        <Link to={`/orders/${order._id}`}>
+            <div className={"row data mb-1 "+(order.orderCancel ? " delete":"")} key={order._id}>
+                <div className="col-3">{order.username}</div>
+                <div className="col-5">
+                    { order.orderItems.map(item=>
+                        <div key={item._id}>{item.productName+" "}x{" "+item.quantity+" "}</div>
+                    )}
+                </div>
+                <div className="col-2">{order.deliveryDate}</div>
+                <div className="col-2">{order.grandTotal}</div>
+            </div>
+        </Link>
+    )
+}
 
-    const [orders, setOrders] = useState()
+export default function Home(props) {
+
+    const [activeOrders, setActiveOrders] = useState()
+    const [todayDelivery, setTodayDelivery] = useState()
+    const [todayOrders, setTodayOrders] = useState()
     const [dashBoardBox, setDashBoardBox] = useState()
     const [newUser, setNewUser] = useState()
     const [orderControl, setOrderControl] = useState()
     const token = JSON.parse(localStorage.getItem("profile"))?.token
 
     useEffect(() => {
+        props.setNavShow(false)
         document.title = `Wallflour Bakehouse | CMS`
         window.scrollTo(0, 0)
         document.querySelectorAll('.nav_ele').forEach((ele)=>{
@@ -29,7 +49,9 @@ export default function Home() {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then((res)=>{
-                setOrders(res.data.activeOrders)
+                setActiveOrders(res.data.activeOrders)
+                setTodayDelivery(res.data.todayDelivery)
+                setTodayOrders(res.data.todayOrders)
                 setDashBoardBox(res.data.dashBoard)
                 setNewUser(res.data.newUsers)
                 setOrderControl(res.data.orderControl.status)
@@ -99,7 +121,7 @@ export default function Home() {
                     </div>
                     <div className="box views">
                         <div className="content">
-                            <div className="text">{orders ? orders.length : 0}</div>
+                            <div className="text">{activeOrders ? activeOrders.length : 0}</div>
                             <div className="subtext">Active Orders</div>
                         </div>
                         <FontAwesomeIcon icon={faTruckFast} />
@@ -107,10 +129,10 @@ export default function Home() {
                 </div>
             </div>
             <div className="row mt-5">
-                <div className="col-7">
+                <div className="col-12">
                     <div className="active_orders">
                         <div className="heading_sec">
-                            <div className="heading">Recent Orders</div>
+                            <div className="heading">Orders To Be Delivered Today</div>
                             <div className="btn_cont">
                                 <Link to="/orders" className="btn_ btn_small">View all</Link>
                             </div>
@@ -118,24 +140,66 @@ export default function Home() {
                         <div className="ord_list container-fluid">
                             <div className="row heading">
                                 <div className="col-3">Username</div>
-                                <div className="col-7">Products</div>
+                                <div className="col-5">Products</div>
+                                <div className="col-2">Delivery Date</div>
                                 <div className="col-2">Total</div>
                             </div>
-                            {orders ? orders.map(order =>   
-                                <div className="row data" key={order._id}>
-                                    <div className="col-3">{order.user.username}</div>
-                                    <div className="col-7">
-                                        { order.orderItems.map(item=>
-                                            <div key={item._id}>{item.product.productName+" "}x{" "+item.quantity+" "}({item.preOrder})</div>
-                                        )}
-                                    </div>
-                                    <div className="col-2">{order.grandTotal}</div>
-                                </div>
-                            ):(<></>)}
+                            {todayDelivery ? 
+                                <OrderCard allOrders={todayDelivery} />
+                            :<></>}
                         </div>
                     </div>
                 </div>
-                <div className="col-5">
+            </div>
+            <div className="row mt-5">
+                <div className="col-12">
+                    <div className="active_orders">
+                        <div className="heading_sec">
+                            <div className="heading">Today's Orders</div>
+                            <div className="btn_cont">
+                                <Link to="/orders" className="btn_ btn_small">View all</Link>
+                            </div>
+                        </div>  
+                        <div className="ord_list container-fluid">
+                            <div className="row heading">
+                                <div className="col-3">Username</div>
+                                <div className="col-5">Products</div>
+                                <div className="col-2">Delivery Date</div>
+                                <div className="col-2">Total</div>
+                            </div>
+                            {todayOrders ? 
+                                <OrderCard allOrders={todayOrders} />
+                            :(<></>)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row mt-5">
+                <div className="col-12">
+                    <div className="active_orders">
+                        <div className="heading_sec">
+                            <div className="heading">Active Orders</div>
+                            <div className="btn_cont">
+                                <Link to="/orders" className="btn_ btn_small">View all</Link>
+                            </div>
+                        </div>  
+                        <div className="ord_list container-fluid">
+                            <div className="row heading">
+                                <div className="col-3">Username</div>
+                                <div className="col-5">Products</div>
+                                <div className="col-2">Delivery Date</div>
+                                <div className="col-2">Total</div>
+                            </div>
+                            {activeOrders ? 
+                                <OrderCard allOrders={activeOrders} />
+                            :(<></>)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row mt-4">
+                <div className="col-3"></div>
+                <div className="col-6">
                     <div className="new_users_cont">
                         <div className="heading">New Customers </div>
                         {newUser?.length>0 ?
@@ -153,6 +217,7 @@ export default function Home() {
                         }
                     </div>
                 </div>
+                <div className="col-3"></div>
             </div>
         </div>
     )

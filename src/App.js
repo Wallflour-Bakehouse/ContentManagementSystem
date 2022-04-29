@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import Nav from './components/nav/nav';
 import Home from './components/home/home';
+import Login from './components/login/login';
 import Orders from './components/orders/orders';
 import OrderDetail from './components/orders/order_detail';
 import MenuManager from './components/products/menu_manager/menu_manager';
@@ -17,11 +18,15 @@ import Coupons from './components/coupons/coupons';
 
 
 function App() {
+
+  const [navShow, setNavShow] = useState()
+
   return (
     <BrowserRouter>
-      <Nav /> 
+      <Nav navShow={navShow} /> 
       <Switch>
-        <Route exact path="/" component={()=><Home />} />
+        <Route exact path="/" component={()=><Home setNavShow={setNavShow} />} />
+        <Route exact path="/login" component={()=><Login setNavShow={setNavShow} />} />
         <Route exact path="/orders" component={()=><Orders />} />
         <Route exact path="/orders/:orderId" component={()=><OrderDetail />} />
         <Route exact path="/recent_comments" component={()=><RecentComments />} />
