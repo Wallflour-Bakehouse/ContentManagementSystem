@@ -170,6 +170,7 @@ export default function OrderDetail() {
             alert("Error: Can not delete order")
         })
     }
+    
     function orderRestore(){
         axios
         .delete(url+`/admin/orderRestore/${order._id}`,{

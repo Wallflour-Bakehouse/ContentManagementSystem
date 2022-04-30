@@ -15,9 +15,11 @@
 }
 .order_detail .delete.restore{
     top: 140px;
+    background-color: rgb(0, 101, 0);
 }
 .order_detail .delete.restore::after{
     content: 'Restore Order';
+    background-color: rgb(0, 101, 0);
 }
 .order_detail .delete{
     position: absolute;

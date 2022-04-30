@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouseChimney, faListUl, faUsers, faMessage, faTruckFast, faBell, faComments, faBars, faTicket } from '@fortawesome/free-solid-svg-icons'
+import { faHouseChimney, faListUl, faUsers, faMessage, faTruckFast, faBell, faComments, faBars, faTicket, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 import './nav.css'
 
@@ -18,6 +18,11 @@ export default function Nav(props) {
     function navMouseOut(){
         document.getElementById(navId).classList.add('active')
         document.querySelector('.nav_bar').classList.add('active')
+    }
+
+    function logout(){
+        localStorage.clear()
+        window.location.reload()
     }
 
     function activeNavEle(id){
@@ -85,6 +90,7 @@ export default function Nav(props) {
                         <div className="text">Coupons</div>
                     </div>
                 </Link>
+                <div className="logout" onClick={logout}><FontAwesomeIcon icon={faRightFromBracket} /></div>
             </div>
             <div className="notifications">
                 <FontAwesomeIcon icon={faBell} />
