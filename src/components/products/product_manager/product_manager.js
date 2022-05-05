@@ -24,7 +24,7 @@ function Card({prod}) {
             </div>
             <div className="price_cont">
                 <div className="price">₹{prod.price-(prod.price*prod.discount*0.01)}</div>
-                {prod.discount!==0 ? (
+                {prod.discount>0 ? (
                     <div className='discount_cont'>  
                         <div className="discount_price">₹{prod.price}</div>
                         <div className="discount">Save {prod.discount}%</div>
@@ -286,6 +286,15 @@ export default function NewProduct(props) {
                             )}
                             <div>Don't exceed more than 25 charecters (Including Space)</div>
                         </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Label htmlFor="name" lg={3}>Units Sold</Label>
+                        <Col lg={4}>
+                            <div style={{padding: "5px 15px", border: "1px solid var(--lineColour)", borderRadius: "5px", overflow: "hidden", backgroundColor:"var(--secondary)"}}>{formData.unitsSold}</div>
+                        </Col>
+                        <Col lg={5} >
+                                <div>Product Unit for reference. (Can not be changed)</div>
+                        </Col>  
                     </FormGroup>
                     <FormGroup row>
                         <Label htmlFor="prodCat" lg={3}>Product Category</Label>

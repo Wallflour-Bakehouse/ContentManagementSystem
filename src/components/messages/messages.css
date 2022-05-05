@@ -136,6 +136,8 @@
 }
 .message_cont .user_board .user .chat_details .msg_preview{
     font-size: 11px;
+    overflow: hidden;
+    width: inherit;
 }
 .message_cont .user_board .user .unread_message_alert{
     font-size: 10px;
@@ -195,6 +197,7 @@
     margin-top: 10px;
     align-self: flex-start;
     font-size: 14px;
+    overflow-wrap: break-word;
 }
 .message_cont .chat_section .message .time{
     position: absolute;

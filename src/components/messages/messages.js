@@ -3,7 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import {url} from '../../url'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane, faMagnifyingGlass, faUserSecret, faArrowLeftLong, faDumpsterFire, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faUserSecret, faArrowLeftLong, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import './messages.css'
 
 const AlwaysScrollToBottom = () => {
@@ -58,9 +58,10 @@ export default function Messages() {
         catch(error){
             console.log(error)
         }
-    }, [])
+    }, [token])
 
     function handleChange(e){
+        if(e.nativeEvent.inputType === "insertLineBreak") return;
         setMessage(e.target.value)
     }
 
@@ -183,6 +184,12 @@ export default function Messages() {
         }
     }
 
+    function enterToSendMsg(e){
+        if (e.key === "Enter" || e.keyCode === 13) {
+            handleSubmit()
+        }
+    }
+
     if(userBoard){
         return (
             <div className="message_cont">
@@ -210,7 +217,7 @@ export default function Messages() {
                             <div className="user" id={user._id} onClick={()=>viewAnonymousUser(user)} key={user._id}>
                                 <div className="chat_details">
                                     <div className="name">{user.name}</div>
-                                    <div className="msg_preview">{user.conversation[0].messages.length < 38 ? (user.conversation[0].messages[0].message):(user.conversation[0].messages[0].message.substring(0, 38)+".....")}</div>
+                                    <div className="msg_preview">{user.conversation[0].messages[0].message.length < 38 ? (user.conversation[0].messages[0].message):(user.conversation[0].messages[0].message.substring(0, 30)+".....")}</div>
                                 </div>
                                 {user.unread>0 ? (<div className="unread_message_alert">{user.unread}</div>):(<></>)}
                             </div>
@@ -223,7 +230,7 @@ export default function Messages() {
                                     <div className="name">{user.user?.username}</div>
                                     {user.conversation.length>0 ?
                                         (
-                                            <div className="msg_preview">{user.conversation[user.conversation.length-1].messages.length < 38 ? (user.conversation[user.conversation.length-1].messages[user.conversation[user.conversation.length-1].messages.length-1].message):(user.conversation[user.conversation.length-1].messages[user.conversation[user.conversation.length-1].messages.length-1].message.substring(0, 38)+".....")}</div>
+                                            <div className="msg_preview">{user.conversation[user.conversation.length-1].messages[user.conversation[user.conversation.length-1].messages.length-1].message.length < 30 ? (user.conversation[user.conversation.length-1].messages[user.conversation[user.conversation.length-1].messages.length-1].message):(user.conversation[user.conversation.length-1].messages[user.conversation[user.conversation.length-1].messages.length-1].message.substring(0, 38)+".....")}</div>
                                         ):(<></>)
                                     }
                                 </div>
@@ -261,7 +268,7 @@ export default function Messages() {
                 {userDetails?.dp ? 
                     (<div className="chat_footer">
                         <div className="input">
-                            <textarea className="type_message" type="text" name="message" placeholder='Type A Message' onChange={handleChange} value={message} />
+                            <textarea className="type_message" type="text" name="message" id="message_input" placeholder='Type A Message' onKeyUp={enterToSendMsg} onChange={handleChange} value={message} />
                             <div className="error_message">Chat Is Not Available Now. Please Try Again Later</div>
                         </div>
                         {message.length!==0 ? (

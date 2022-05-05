@@ -155,12 +155,6 @@ export default function ManageCategory() {
                             <div className="box deleted">
                                 <div className="cat_name">{category.categoryName}</div>
                                 <div className="no_dish">Total Dishes: {category.categoryProducts.length}</div>
-                                {category.categoryName!=="Trash" ? (
-                                    <>
-                                        <div className="edit" onClick={()=>setInput(category.categoryName, category._id)}><FontAwesomeIcon icon={faPenSquare} /></div>
-                                        <div className="delete" onClick={()=>restoreCategory(category._id)}><FontAwesomeIcon icon={faRetweet} /></div>
-                                    </>
-                                ):(<></>)}
                             </div>
                         </div>
                     ):(<></>)
