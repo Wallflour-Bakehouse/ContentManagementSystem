@@ -14,13 +14,31 @@
     display: grid;
     place-items: center;
     font-size: 20px;
-    background-color: darkred;
+    background-color: var(--error);
     border: 1px solid var(--lineColour);
     cursor: pointer;
     transition: 0.5s ease-in-out;
 }
 .user_details_cont .delete_user:hover{
     filter: brightness(1.2);
+}
+.user_details_cont .delete_user::after{
+    content: 'Delete User?';
+    position: absolute;
+    opacity: 0;
+    right: 55px;
+    bottom: 50%;
+    padding: 2px 10px;
+    font-size: 12px;
+    width: max-content;
+    background-color: var(--error);
+    pointer-events: none;
+    transform: translateY(100%);
+    transition: 0.3s ease-in-out;
+}
+.user_details_cont .delete_user:hover::after{
+    transform: translateY(50%);
+    opacity: 1;
 }
 .user_details_cont .img_cont{
     margin-bottom: 20px;
@@ -48,6 +66,7 @@
     border: 1px solid var(--lineColour);
     border-radius: 5px;
     font-size: 16px;
+    position: relative;
 }
 
 .user_details_cont .user_details .detail .delete{
@@ -67,4 +86,30 @@
 }
 .user_details_cont .user_details .detail .delete:hover{
     transform: scale(1.05);
+}
+.user_details_cont .user_details .detail .delete::after{
+    content: 'Delete Comment?';
+    position: absolute;
+    opacity: 0;
+    right: 40px;
+    bottom: 50%;
+    padding: 2px 10px;
+    font-size: 10px;
+    width: max-content;
+    background-color: var(--error);
+    pointer-events: none;
+    transform: translateY(100%);
+    transition: 0.3s ease-in-out;
+}
+.user_details_cont .user_details .detail .delete:hover::after{
+    transform: translateY(50%);
+    opacity: 1;
+}
+
+.user_details_cont .user_details .detail.container-fluid .delete{
+    bottom: 85%;
+    right: 8px;
+}
+.user_details_cont .user_details .detail.container-fluid .delete::after{
+    content: 'Delete Order?';
 }

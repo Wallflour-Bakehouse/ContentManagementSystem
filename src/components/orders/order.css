@@ -27,7 +27,8 @@
     color: white;
     background-color: var(--secondary);
 }
-.orders_cont .orders .order_card{
+.order_card{
+    position: relative;
     padding: 20px;
     border: 2px solid var(--lineColour);
     font-size: 17px;
@@ -35,26 +36,26 @@
     border-radius: 5px;
     transition: 0.5s ease-in-out;
 }
-.orders_cont .orders .order_card.delete{
+.order_card.delete{
     background-color: rgba(201, 0, 0, 0.15);
 }
-.orders_cont .orders .order_card:hover{
+.order_card:hover{
     filter: brightness(1.2);
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
-.orders_cont .orders .order_card .row_{
+.order_card .row_{
     margin-bottom: 5px;
 }
-.orders_cont .orders .order_card b{
+.order_card b{
     font-size: 18px;
     color: var(--lineColour);
 }
-.orders_cont .orders .order_card .ord_btn_cont{
+.order_card .ord_btn_cont{
     margin-bottom: 0;
     margin-top: 15px;
     text-align: center;
 }
-.orders_cont .orders .order_card .ord_btn_cont .ord_btn{
+.order_card .ord_btn_cont .ord_btn{
     background-color: transparent;
     padding: 7px 20px;
     transition: 0.5s ease-in-out;
@@ -65,7 +66,7 @@
     color: white;
     margin-top: 10px;
 }
-.orders_cont .orders .order_card .ord_btn_cont .ord_btn:hover{
+.order_card .ord_btn_cont .ord_btn:hover{
     color: white;
     background-color: var(--btnColour);
 }

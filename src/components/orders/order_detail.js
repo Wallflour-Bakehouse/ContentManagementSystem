@@ -4,7 +4,7 @@ import {url} from '../../url'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage, faRetweet, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Form, FormGroup, Col } from "reactstrap";
 import './order_detail.css'
 
@@ -70,7 +70,7 @@ function UpdateForm(props){
                 <Col lg={1}>
                     <div className='label'>Status:</div>
                 </Col>
-                <Col lg={3} >
+                {props.status!=="Delivered" ? (<Col lg={3} >
                     <select name="status" onChange={setStatusOption}>
                         <option>Current: {props.status}</option>
                         <option value="Order Not Accepted">Order Not Accepted</option>
@@ -78,35 +78,35 @@ function UpdateForm(props){
                         <option value="Order Out For Delivery">Order Out For Delivery</option>
                         <option value="Delivered">Delivered</option>
                     </select>
-                </Col>
+                </Col>):(<></>)}
                 <Col lg={4}>
                     <div><b className='me-2'>Current Order Status:</b> {props.status}</div>
                 </Col>
-                <Col lg={2}>
+                {props.status!=="Delivered" ? (<Col lg={2}>
                     <div className="btn_cont" onClick={updateStatus}>
                         <div className="btn_ btn_small">Update</div>
                     </div>
-                </Col>
+                </Col>):(<></>)}
             </FormGroup>
             <FormGroup row>
                 <Col lg={1}>
                     <div className='label'>Payment:</div>
                 </Col>
-                <Col lg={3} >
+                {props.payment!=="Recieved" ? (<Col lg={3} >
                     <select name="status" onChange={setPaymentOption}>
                         <option>Current: {props.payment}</option>
                         <option value="Pending">Pending</option>
                         <option value="Recieved">Recieved</option>
                     </select>
-                </Col>
+                </Col>):(<></>)}
                 <Col lg={4}>
                     <div><b className='me-2'>Current Payment Status:</b> {props.payment}</div>
                 </Col>
-                <Col lg={2}>
+                {props.payment!=="Recieved" ?  (<Col lg={2}>
                     <div className="btn_cont" onClick={updatePayment}>
                         <div className="btn_ btn_small">Update</div>
                     </div>
-                </Col>
+                </Col>):(<></>)}
             </FormGroup>
         </Form>
     )
@@ -141,7 +141,7 @@ export default function OrderDetail() {
         catch(error){
             console.log(error)
         }
-    }, [])
+    }, [token, ord.orderId])
 
     function closeModal(){
         setModal({open: !modal.open})
@@ -164,7 +164,7 @@ export default function OrderDetail() {
         })
         .then(()=>{
             alert("Order Deleted")
-            window.location.reload()
+            window.location.replace('/orders')
         })
         .catch(()=>{
             alert("Error: Can not delete order")
@@ -192,7 +192,7 @@ export default function OrderDetail() {
                 <ModalBody>{modal.body}</ModalBody>
                 {modal.footer ?
                     <ModalFooter>
-                        <button type="button" className="btn btn-success" onClick={modal.delete ? orderDelete : orderRestore }>{modal.delete ? "Delete":"Restore"} Order</button>
+                        <button type="button" className={"btn"+(modal.delete ? " btn-danger":" btn-success")} onClick={modal.delete ? orderDelete : orderRestore }>{modal.delete ? "Delete":"Restore"} Order</button>
                         <button type="button" className="btn btn-secondary" onClick={closeModal}>Cancel</button>
                     </ModalFooter>:<></>
                 }
@@ -207,7 +207,7 @@ export default function OrderDetail() {
                 {order.orderCancel ? <div className="mb-4" style={{fontWeight: "500", fontSize: "22px", color: "red"}}>User Request for Order Cancelation</div>:<></>}
                 <UpdateForm id={order._id} payment={order.paymentStatus} status={order.status} />
                 <DialogBox />
-                <div className="delete" onClick={()=>triggerModal("Delete Order?", "Deletion of order will remove the order from the database.", true, true)}><FontAwesomeIcon icon={faTrashCan} /></div>
+                {order.status!=="Delivered" ? (<div className="delete" onClick={()=>triggerModal("Delete Order?", "Deletion of order will remove the order from the database.", true, true)}><FontAwesomeIcon icon={faTrashCan} /></div>):(<></>)}
                 {order.orderCancel ? <div className="delete restore" onClick={()=>triggerModal("Restore Order?", "Restoring the oroduct will remove the delete request.", false, true)}><FontAwesomeIcon icon={faRetweet} /></div>:<></>}
                 <div className="ord_status" style={{fontSize: "18px"}}><b className='me-2'>{order.status!=="Delivered" ? ("Expected"):("")} Delivery Date:</b> {order.deliveryDate}</div>
                 <div className="row heading">
@@ -253,10 +253,10 @@ export default function OrderDetail() {
                     <div className="col-12 col-md-6">
                         <div className="add bill_add p-3 p-md-4 mb-4">
                             <div className="heading">Billing Address</div>
-                            <div className="name">Name: {order.user.firstname} {order.user.lastname}</div>
-                            <div className="name">Phone: +{order.user.countryCode} - {order.user.phoneNumber}</div>
+                            <div className="name">Name: {order.billingAddress.name}</div>
+                            <div className="name">Phone: +{order.billingAddress.countryCode} - {order.billingAddress.phoneNumber}</div>
                             <div><b>Address:</b></div>
-                            <p>{order.user.billingAddress.address}, {order.user.billingAddress.landmark}, {order.user.billingAddress.city} - {order.user.billingAddress.pincode}, {order.user.billingAddress.state}</p>
+                            <p>{order.billingAddress.address}, {order.billingAddress.landmark}, {order.billingAddress.city} - {order.billingAddress.pincode}, {order.billingAddress.state}</p>
                         </div>
                     </div>
                     <div className="col-12 col-md-6">
